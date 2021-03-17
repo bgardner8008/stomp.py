@@ -358,7 +358,7 @@ class BaseTransport(stomp.listener.Publisher):
             with self.__receiver_thread_exit_condition:
                 self.__receiver_thread_exited = True
                 self.__receiver_thread_exit_condition.notifyAll()
-            logging.info(f"Receiver loop ended: notified {notified_on_disconnect}")
+            logging.info(f"Receiver loop ended: notified_on_disconnect {self.notified_on_disconnect}")
             self.notify("receiver_loop_completed")
             if notify_disconnected and not self.notified_on_disconnect:
                 self.notify("disconnected")
