@@ -199,6 +199,7 @@ class BaseTransport(stomp.listener.Publisher):
         :param dict headers: the map of headers associated with the message
         :param body: the content of the message
         """
+        logging.info(f"notify {frame_type}")
         if frame_type == "receipt":
             # logic for wait-on-receipt notification
             receipt = frame.headers["receipt-id"]
@@ -357,7 +358,7 @@ class BaseTransport(stomp.listener.Publisher):
             with self.__receiver_thread_exit_condition:
                 self.__receiver_thread_exited = True
                 self.__receiver_thread_exit_condition.notifyAll()
-            logging.info("Receiver loop ended")
+            logging.info(f"Receiver loop ended: notified {notified_on_disconnect}")
             self.notify("receiver_loop_completed")
             if notify_disconnected and not self.notified_on_disconnect:
                 self.notify("disconnected")
