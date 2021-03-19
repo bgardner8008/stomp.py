@@ -325,7 +325,7 @@ class BaseTransport(stomp.listener.Publisher):
         """
         Main loop listening for incoming data.
         """
-        logging.info("Starting receiver loop (%s)", threading.current_thread())
+        logging.info("Starting stomp receiver loop (%s)", threading.current_thread())
         notify_disconnected = True
         try:
             while self.running:
@@ -358,7 +358,7 @@ class BaseTransport(stomp.listener.Publisher):
             with self.__receiver_thread_exit_condition:
                 self.__receiver_thread_exited = True
                 self.__receiver_thread_exit_condition.notifyAll()
-            logging.info(f"Receiver loop ended: notified_on_disconnect {self.notified_on_disconnect}")
+            logging.info(f"Receiver loop ended ({threading.current_thread()}): notified_on_disconnect {self.notified_on_disconnect}")
             self.notify("receiver_loop_completed")
             if notify_disconnected and not self.notified_on_disconnect:
                 self.notify("disconnected")
