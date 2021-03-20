@@ -354,6 +354,8 @@ class BaseTransport(stomp.listener.Publisher):
                     break
                 finally:
                     self.cleanup()
+        except Exception as e:
+            logging.exception("Got exception in __receiver_loop")
         finally:
             with self.__receiver_thread_exit_condition:
                 self.__receiver_thread_exited = True
